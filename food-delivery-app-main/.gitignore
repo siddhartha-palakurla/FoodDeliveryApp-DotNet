@@ -1,0 +1,80 @@
+# -----------------------------------------
+# Logs
+# -----------------------------------------
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# -----------------------------------------
+# Node modules (ALL PROJECTS)
+# -----------------------------------------
+backend/node_modules/
+frontend/node_modules/
+admin/node_modules/
+node_modules/
+
+# -----------------------------------------
+# Environment files
+# -----------------------------------------
+backend/.env
+frontend/.env
+admin/.env
+.env
+
+# -----------------------------------------
+# Build / Dist output
+# -----------------------------------------
+backend/dist/
+frontend/dist/
+frontend/build/
+admin/dist/
+admin/build/
+
+# -----------------------------------------
+# System / OS files
+# -----------------------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------------------
+# IDE / Editor folders
+# -----------------------------------------
+.vscode/
+.idea/
+
+# -----------------------------------------
+# PM2 runtime files
+# -----------------------------------------
+.pids
+*.pid
+*.seed
+
+# -----------------------------------------
+# Temporary files
+# -----------------------------------------
+tmp/
+temp/
+*.swp
+*.swo
+
+
+# -----------------------------------------
+# .NET / Visual Studio
+# -----------------------------------------
+bin/
+obj/
+.vs/
+
+*.user
+*.suo
+*.cache
+
+# ASP.NET appsettings secrets
+appsettings.Development.json
+
+# Uploads folder (optional)
+backend-dotnet/FoodDelivery.API/uploads/

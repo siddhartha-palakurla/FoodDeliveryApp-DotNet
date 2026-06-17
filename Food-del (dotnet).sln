@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "food-delivery-app-main", "food-delivery-app-main", "{A6262D61-3195-A8F6-6079-FD646A20F102}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend-dotnet", "backend-dotnet", "{711709DA-78DC-D143-F410-6A676C13DF75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodDelivery.API", "food-delivery-app-main\backend-dotnet\FoodDelivery.API\FoodDelivery.API.csproj", "{01A06558-32AD-2E4B-057E-7F5FAD5CC7C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01A06558-32AD-2E4B-057E-7F5FAD5CC7C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01A06558-32AD-2E4B-057E-7F5FAD5CC7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01A06558-32AD-2E4B-057E-7F5FAD5CC7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01A06558-32AD-2E4B-057E-7F5FAD5CC7C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{711709DA-78DC-D143-F410-6A676C13DF75} = {A6262D61-3195-A8F6-6079-FD646A20F102}
+		{01A06558-32AD-2E4B-057E-7F5FAD5CC7C5} = {711709DA-78DC-D143-F410-6A676C13DF75}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC498C9C-FD9E-44E3-94F2-E8F15AB185F8}
+	EndGlobalSection
+EndGlobal
