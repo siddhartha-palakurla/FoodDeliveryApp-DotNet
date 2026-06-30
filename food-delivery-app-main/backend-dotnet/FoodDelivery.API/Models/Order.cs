@@ -17,6 +17,8 @@ namespace FoodDelivery.API.Models
         public Address Address { get; set; } = null!;
         public bool Payment { get; set; } = false;
         public string Status { get; set; } = "Pending";
+
+        public DateTime Date { get; set; } = DateTime.UtcNow;
     }
 
     public class OrderItem

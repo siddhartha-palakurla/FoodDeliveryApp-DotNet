@@ -28,17 +28,29 @@ namespace FoodDelivery.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
-            var token = await _userService.Register(
-                request.Name, request.Email, request.Password
+            var result = await _userService.Register(
+                request.Name,
+                request.Email,
+                request.Password
             );
 
-            if (token == null)
-                return Ok(new { success = false, message = "User already exists" });
+            if (!result.Success)
+            {
+                return Ok(new
+                {
+                    success = false,
+                    message = result.Message
+                });
+            }
 
-            return Ok(new { success = true, token });
+            return Ok(new
+            {
+                success = true,
+                token = result.Token
+            });
         }
 
-        [HttpPost("google")]
+        [HttpPost("google-login")]
         public async Task<IActionResult> GoogleLogin(GoogleLoginRequest request)
         {
             var token = await _userService.GoogleLogin(

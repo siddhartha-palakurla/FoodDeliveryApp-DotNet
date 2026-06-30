@@ -10,7 +10,6 @@ namespace FoodDelivery.API.Controllers
 {
     [ApiController]
     [Route("api/order")]
-    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly OrderService _orderService;
@@ -25,6 +24,7 @@ namespace FoodDelivery.API.Controllers
         private string UserId => User.FindFirstValue("id")!;
 
         // PLACE ORDER
+        [Authorize]
         [HttpPost("place")]
         public async Task<IActionResult> PlaceOrder([FromBody] PlaceOrderRequest request)
         {
@@ -90,17 +90,100 @@ namespace FoodDelivery.API.Controllers
         }
 
         // VERIFY ORDER
+        [Authorize]
         [HttpPost("verify")]
         public async Task<IActionResult> VerifyOrder([FromBody] VerifyOrderRequest request)
         {
             if (request.Success == "true")
             {
                 await _orderService.MarkPaid(request.OrderId);
-                return Ok(new { success = true });
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Paid"
+                });
             }
 
             await _orderService.Delete(request.OrderId);
-            return Ok(new { success = false });
+
+            return Ok(new
+            {
+                success = false,
+                message = "Not paid"
+            });
         }
+
+
+        //User Order
+        [Authorize]
+        [HttpPost("userorders")]
+        public async Task<IActionResult> UserOrders()
+        {
+            var orders = await _orderService.UserOrders(UserId);
+
+            return Ok(new
+            {
+                success = true,
+                data = orders
+            });
+        }
+
+
+
+        // ADMIN - List all orders
+        //[AllowAnonymous]
+        [HttpGet("list")]
+        public async Task<IActionResult> ListOrders()
+        {
+            try
+            {
+                var orders = await _orderService.ListOrders();
+
+                return Ok(new
+                {
+                    success = true,
+                    data = orders
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = ex.ToString()
+                });
+            }
+        }
+
+
+
+        // ADMIN - Update order status
+        [HttpPost("status")]
+        public async Task<IActionResult> UpdateStatus([FromBody] UpdateStatusRequest request)
+        {
+            try
+            {
+                await _orderService.UpdateStatus(
+                    request.OrderId,
+                    request.Status
+                );
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Status Updated"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = ex.ToString()
+                });
+            }
+        }
+
     }
 }

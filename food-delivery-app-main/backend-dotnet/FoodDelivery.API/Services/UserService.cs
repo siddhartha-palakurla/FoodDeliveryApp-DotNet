@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace FoodDelivery.API.Services
 {
@@ -67,14 +68,28 @@ namespace FoodDelivery.API.Services
         }
 
         // 🔹 Register
-        public async Task<string?> Register(string name, string email, string password)
+        public async Task<(bool Success, string Message, string? Token)> Register(
+    string name,
+    string email,
+    string password)
         {
+            // Check if user already exists
             var exists = await _users
                 .Find(u => u.Email == email)
                 .AnyAsync();
 
-            if (exists) return null;
+            if (exists)
+                return (false, "User already exists", null);
 
+            // Validate email
+            if (!new EmailAddressAttribute().IsValid(email))
+                return (false, "Please enter a valid email", null);
+
+            // Validate password
+            if (password.Length < 8)
+                return (false, "Please enter a strong password", null);
+
+            // Hash password
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
             var user = new User
@@ -87,7 +102,9 @@ namespace FoodDelivery.API.Services
 
             await _users.InsertOneAsync(user);
 
-            return CreateToken(user.Id);
+            var token = CreateToken(user.Id);
+
+            return (true, "Registered Successfully", token);
         }
 
         // 🔹 Google Login

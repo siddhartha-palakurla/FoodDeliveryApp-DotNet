@@ -23,41 +23,44 @@ namespace FoodDelivery.API.Controllers
         // Add food (with image)
         [HttpPost("add")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> AddFood(
-            [FromForm] string name,
-            [FromForm] string description,
-            [FromForm] decimal price,
-            [FromForm] string category,
-            [FromForm] IFormFile image
-        )
+        public async Task<IActionResult> AddFood([FromForm] AddFoodRequest request)
         {
-            if (image == null || image.Length == 0)
-                return BadRequest(new { success = false, message = "Image is required" });
+            if (request.Image == null || request.Image.Length == 0)
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Image is required"
+                });
 
-            var uploadsPath = Path.Combine(_env.ContentRootPath, "uploads");
+            var uploadsPath = Path.Combine(_env.ContentRootPath, "Uploads");
+
             if (!Directory.Exists(uploadsPath))
                 Directory.CreateDirectory(uploadsPath);
 
-            var fileName = $"{Guid.NewGuid()}_{image.FileName}";
+            var fileName = $"{Guid.NewGuid()}_{request.Image.FileName}";
             var filePath = Path.Combine(uploadsPath, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                await image.CopyToAsync(stream);
+                await request.Image.CopyToAsync(stream);
             }
 
             var food = new Food
             {
-                Name = name,
-                Description = description,
-                Price = price,
-                Category = category,
+                Name = request.Name,
+                Description = request.Description,
+                Price = request.Price,
+                Category = request.Category,
                 Image = fileName
             };
 
             await _foodService.AddFood(food);
 
-            return Ok(new { success = true, message = "Food Added" });
+            return Ok(new
+            {
+                success = true,
+                message = "Food Added"
+            });
         }
 
         // List food

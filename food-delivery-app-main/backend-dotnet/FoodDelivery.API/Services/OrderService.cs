@@ -44,11 +44,30 @@ namespace FoodDelivery.API.Services
             );
 
         public async Task MarkPaid(string orderId)
-            => await _orders.UpdateOneAsync(
+        {
+            // Get the order
+            var order = await _orders
+                .Find(o => o.Id == orderId)
+                .FirstOrDefaultAsync();
+
+            if (order == null)
+                return;
+
+            // Mark payment as completed
+            await _orders.UpdateOneAsync(
                 o => o.Id == orderId,
                 Builders<Order>.Update.Set(o => o.Payment, true)
             );
 
+            // Clear user's cart
+            await _users.UpdateOneAsync(
+                u => u.Id == order.UserId,
+                Builders<User>.Update.Set(
+                    u => u.CartData,
+                    new Dictionary<string, int>()
+                )
+            );
+        }
         public async Task Delete(string orderId)
             => await _orders.DeleteOneAsync(o => o.Id == orderId);
     }
