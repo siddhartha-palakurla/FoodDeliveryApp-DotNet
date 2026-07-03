@@ -22,7 +22,7 @@ jobs:
           script: |
             cd ${{ secrets.BACKEND_PATH }}
             git pull origin main
-            cd backend
+            cd food-delivery-app-main/backend
             dotnet restore
             dotnet publish -c Release -o /home/ubuntu/backend-publish
             sudo systemctl restart food-backend

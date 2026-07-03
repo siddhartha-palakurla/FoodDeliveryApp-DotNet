@@ -22,11 +22,11 @@ jobs:
           node-version: 22
 
       - name: Install frontend dependencies
-        working-directory: frontend
+        working-directory: food-delivery-app-main/frontend
         run: npm install
 
       - name: Build frontend
-        working-directory: frontend
+        working-directory: food-delivery-app-main/frontend
         run: npm run build
         env:
           VITE_API_URL: http://${{ secrets.EC2_HOST }}:5000
@@ -39,4 +39,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload frontend to S3
-        run: aws s3 sync frontend/dist s3://${{ secrets.FRONTEND_BUCKET }} --delete
+        run: aws s3 sync food-delivery-app-main/frontend/dist s3://${{ secrets.FRONTEND_BUCKET }} --delete

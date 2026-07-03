@@ -22,11 +22,11 @@ jobs:
           node-version: 22
 
       - name: Install admin dependencies
-        working-directory: admin
+        working-directory: food-delivery-app-main/admin
         run: npm install
 
       - name: Build admin
-        working-directory: admin
+        working-directory: food-delivery-app-main/admin
         run: npm run build
         env:
           VITE_API_URL: http://${{ secrets.EC2_HOST }}:5000
@@ -39,4 +39,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload admin to S3
-        run: aws s3 sync admin/dist s3://${{ secrets.ADMIN_BUCKET }} --delete
+        run: aws s3 sync food-delivery-app-main/admin/dist s3://${{ secrets.ADMIN_BUCKET }} --delete
