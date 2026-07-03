@@ -11,7 +11,7 @@ const StoreContextProvider = (props) => {
   const [food_list, setFood_list] = useState([]);
 
   // .NET backend
-  const url = "http://localhost:5081";
+  const url = "http://3.110.189.248:5000";
 
   // 🔹 Add to cart
   const addToCart = async (itemId) => {

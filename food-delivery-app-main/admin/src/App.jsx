@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 
 const App = () => {
 
-  const url = "http://localhost:5081"
+  const url = "http://3.110.189.248:5000";
 
   return (
     <div>
