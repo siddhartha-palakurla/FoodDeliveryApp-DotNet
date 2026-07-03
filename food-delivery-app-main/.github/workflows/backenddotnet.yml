@@ -1,0 +1,29 @@
+name: Deploy DotNet Backend to EC2
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy backend on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd ${{ secrets.BACKEND_PATH }}
+            git pull origin main
+            cd backend
+            dotnet restore
+            dotnet publish -c Release -o /home/ubuntu/backend-publish
+            sudo systemctl restart food-backend
+            sudo systemctl status food-backend --no-pager
